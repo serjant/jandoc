@@ -182,12 +182,7 @@ function callCommand(str, callback) {
         ['-t', '-w', '--to', '--write'],
         ['-f', '-r', '--from', '--read']
       ]);
-  
-  if (callback) {
-    pandoc = procedure(cleanArgs, args, callback);  // initialize with both items
-  } else {
-    pandoc = procedure(cleanArgs, args);            // initialize with both items    
-  }
+  procedure.init(cleanArgs, args, callback);         // initialize with both items
 }
 
 /*
@@ -201,26 +196,15 @@ function callCommand(str, callback) {
 function jandoc(options, callback) {
   var argString = buildArgString(options);
   callCommand(argString, callback);
-}
-
-/* (also make a sync version)
- */
-jandoc.sync = function (options) {
-  var argString = buildArgString(options);
-  callCommand(argString);
+  if(typeof callback == 'function')
+    callback(null);
 }
 
 /*
  * Allow the user to access the command line
  * version through jandoc.cmd.
  */
-jandoc.cmd = function (str, callback) {
-  callCommand(str, callback);
-}
-
-/* (also make a sync version)
- */
-jandoc.cmdSync = callCommand;
+jandoc.cmd = callCommand;
 
 /*
  * Expose the jandoc function.
