@@ -196,8 +196,6 @@ function callCommand(str, callback) {
 function jandoc(options, callback) {
   var argString = buildArgString(options);
   callCommand(argString, callback);
-  if(typeof callback == 'function')
-    callback(null);
 }
 
 /*
